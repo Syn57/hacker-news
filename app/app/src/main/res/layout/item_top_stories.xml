@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
+    android:layout_width="163dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="4dp"
+    android:backgroundTint="@color/orange_primary"
+    card_view:cardCornerRadius="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_top_stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        card_view:cardCornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:gravity="center"
+                android:text="@string/dummy_title"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_item_comment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/ic_comment"
+                card_view:layout_constraintEnd_toStartOf="@+id/tv_item_score"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/tv_item_title" />
+
+            <TextView
+                android:id="@+id/tv_item_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                card_view:layout_constraintBottom_toBottomOf="@id/iv_item_comment"
+                card_view:layout_constraintStart_toEndOf="@+id/iv_item_comment"
+                card_view:layout_constraintTop_toTopOf="@id/iv_item_comment"
+                tools:text="@string/dummy_count" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_item_score"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_score"
+                card_view:layout_constraintBottom_toBottomOf="@id/tv_item_score"
+                card_view:layout_constraintEnd_toStartOf="@id/tv_item_score"
+                card_view:layout_constraintTop_toTopOf="@id/tv_item_score" />
+
+            <TextView
+                android:id="@+id/tv_item_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintBottom_toBottomOf="@id/iv_item_comment"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@id/iv_item_comment"
+                card_view:layout_constraintTop_toTopOf="@id/iv_item_comment"
+                tools:text="@string/dummy_count" />
+
+
+            <View
+                android:id="@+id/v1_item"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/grey"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/iv_item_comment" />
+
+
+            <TextView
+                android:id="@+id/tv_item_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/dummy_date"
+                android:textSize="12sp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/v1_item" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_item_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:text="@string/dummy_author"
+        android:textColor="@color/white"
+        android:textStyle="italic" />
+
+</androidx.cardview.widget.CardView>

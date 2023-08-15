@@ -1,0 +1,34 @@
+package com.ddb.hackernews.core.data.source.local.entity
+
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+import kotlinx.parcelize.Parcelize
+
+@Entity(tableName = "news")
+data class NewsEntity(
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    var id: Int = 0,
+    @ColumnInfo(name = "score")
+    var score: Int? = null,
+    @ColumnInfo(name = "id_story")
+    var idStory: Int? = 0,
+    @ColumnInfo(name = "title")
+    var title: String? = null,
+    @ColumnInfo(name = "by")
+    var by: String? = null,
+    @ColumnInfo(name = "url")
+    var url: String? = null,
+    @ColumnInfo(name = "time")
+    var time: Int? = null,
+    @ColumnInfo(name="is_fav")
+    var isFav: Boolean? = false,
+    @field:SerializedName("kids")
+    var kids: List<Int?>? = null
+)

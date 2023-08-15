@@ -6,17 +6,17 @@
     <data>
         <variable
             name="detailViewModel"
-            type="com.ddb.hackernews.viewmodel.DetailStoryViewModel" />
+            type="com.ddb.hackernews.detail.DetailStoryViewModel" />
         <variable
             name="story"
-            type="com.ddb.hackernews.data.StoryResponse" />
+            type="com.ddb.hackernews.core.data.source.remote.response.StoryResponse" />
         <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.DetailStoryActivity">
+        tools:context=".detail.DetailStoryActivity">
 
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -275,7 +275,7 @@
             android:layout_width="363dp"
             android:layout_height="470dp"
             android:layout_marginTop="12dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="@id/v4"
             app:layout_constraintStart_toStartOf="@id/v4"
             app:layout_constraintTop_toBottomOf="@id/v4" />

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.ddb.hackernews.ui.HomeFragment"
+        android:name="com.ddb.hackernews.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -19,23 +19,25 @@
     </fragment>
     <activity
         android:id="@+id/detailStoryActivity"
-        android:name="com.ddb.hackernews.ui.DetailStoryActivity"
+        android:name="com.ddb.hackernews.detail.DetailStoryActivity"
         android:label="activity_detail_story"
         tools:layout="@layout/activity_detail_story" >
         <argument
             android:name="storyClicked"
-            app:argType="com.ddb.hackernews.data.StoryResponse"
+            app:argType="com.ddb.hackernews.core.domain.model.News"
             app:nullable="true"
             android:defaultValue="@null" />
     </activity>
     <fragment
         android:id="@+id/detailStoryFragment"
-        android:name="com.ddb.hackernews.DetailStoryFragment"
+        android:name="com.ddb.hackernews.detail.DetailStoryFragment"
         android:label="fragment_detail_story"
         tools:layout="@layout/fragment_detail_story" >
         <argument
             android:name="storyClicked"
-            app:argType="com.ddb.hackernews.data.StoryResponse"
-            app:nullable="true" />
+            app:argType="com.ddb.hackernews.core.domain.model.News"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
+<!--    com.ddb.hackernews.core.domain.model.News-->
 </navigation>

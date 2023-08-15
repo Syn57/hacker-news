@@ -6,16 +6,12 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.*
-import com.ddb.hackernews.data.Story
-import com.ddb.hackernews.data.StoryResponse
-import com.ddb.hackernews.repository.StoryRepository
-import com.ddb.hackernews.retrofit.ApiConfig
+import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
+import com.ddb.hackernews.core.data.source.remote.response.StoryResponse
+import com.ddb.hackernews.core.domain.repository.StoryRepository
+import com.ddb.hackernews.core.data.source.remote.network.ApiConfig
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,8 +21,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _stories = MutableLiveData<ArrayList<StoryResponse>?>()
     val stories: LiveData<ArrayList<StoryResponse>?> = _stories
 
-    private val _story = MutableLiveData<Story?>()
-    val story: MutableLiveData<Story?> = _story
+    private val _newsEntity = MutableLiveData<NewsEntity?>()
+    val newsEntity: MutableLiveData<NewsEntity?> = _newsEntity
 
     var _isLoading = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = _isLoading
@@ -112,10 +108,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return false
     }
 
-    private fun getLastFav(): Story? = mStoryRepository.getLastFav()
+    private fun getLastFav(): NewsEntity? = mStoryRepository.getLastFav()
 
     fun favorite() {
-        _story.postValue(getLastFav())
+        _newsEntity.postValue(getLastFav())
     }
 
     companion object {

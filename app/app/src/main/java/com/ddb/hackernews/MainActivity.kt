@@ -1,25 +1,7 @@
 package com.ddb.hackernews
 
-import android.content.Context
-import android.content.Intent
-import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.ddb.hackernews.adapter.ListTopStoriesAdapter
-import com.ddb.hackernews.data.Story
-import com.ddb.hackernews.data.StoryResponse
-import com.ddb.hackernews.databinding.ActivityMainBinding
-import com.ddb.hackernews.ui.DetailStoryActivity
-import com.ddb.hackernews.viewmodel.MainViewModel
-import com.ddb.hackernews.viewmodel.ViewModelFactory
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-# Hacker News App - Mini project Intership DDB Telkom
+# Hacker News App - Mini project
 
 ## Overview
 An application to retrieve and show top stories data from Hacker News API. The app can also store a certain favorite story.

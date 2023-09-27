@@ -7,7 +7,6 @@ import com.ddb.hackernews.core.data.source.remote.network.ApiResponse
 import com.ddb.hackernews.core.data.source.remote.network.ApiService
 import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-import com.ddb.hackernews.core.data.source.remote.response.StoryResponse
 import com.ddb.hackernews.core.domain.model.Comment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -44,41 +43,20 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getAllComments(idComments: List<Int>): Flow<ApiResponse<List<CommentsResponse>>>{
+    suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>>{
         return flow {
             try {
-                val commentList = ArrayList<CommentsResponse>()
-                idComments.forEach {
+                val result = ArrayList<CommentsResponse>()
+                idComments?.forEach {
                     val response = apiService.getComments(it.toString())
-                    commentList.add(response)
+                    result.add(response)
                 }
-                if (commentList.isNotEmpty()){
-                    emit(ApiResponse.Success(commentList))
-                } else {
-                    emit(ApiResponse.Empty)
+                Log.d("TAG", "getAllComments2: $result")
+                if(result.isNotEmpty()){
+                    emit(Resource.Success(result.toList()))
                 }
             } catch (e: Exception){
-                emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
-            }
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun getAllComments2(idComments: List<Int>): Flow<ApiResponse<List<CommentsResponse>>>{
-        return flow {
-            try {
-                val commentList = ArrayList<CommentsResponse>()
-                idComments.forEach {
-                    val response = apiService.getComments(it.toString())
-                    commentList.add(response)
-                }
-                if (commentList.isNotEmpty()){
-                    emit(ApiResponse.Success(commentList))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception){
-                emit(ApiResponse.Error(e.toString()))
+                emit(Resource.Error(e.toString()))
                 Log.e("RemoteDataSource", e.toString())
             }
         }.flowOn(Dispatchers.IO)

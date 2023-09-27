@@ -11,33 +11,21 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_detailStoryActivity"
-            app:destination="@id/detailStoryActivity" />
-        <action
             android:id="@+id/action_homeFragment_to_detailStoryFragment"
-            app:destination="@id/detailStoryFragment" />
+            app:destination="@id/detailNewsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"/>
     </fragment>
-    <activity
-        android:id="@+id/detailStoryActivity"
-        android:name="com.ddb.hackernews.detail.DetailStoryActivity"
-        android:label="activity_detail_story"
-        tools:layout="@layout/activity_detail_story" >
-        <argument
-            android:name="storyClicked"
-            app:argType="com.ddb.hackernews.core.domain.model.News"
-            app:nullable="true"
-            android:defaultValue="@null" />
-    </activity>
+
     <fragment
-        android:id="@+id/detailStoryFragment"
-        android:name="com.ddb.hackernews.detail.DetailStoryFragment"
+        android:id="@+id/detailNewsFragment"
+        android:name="com.ddb.hackernews.home.DetailNewsFragment"
         android:label="fragment_detail_story"
-        tools:layout="@layout/fragment_detail_story" >
+        tools:layout="@layout/fragment_detail_news" >
         <argument
             android:name="storyClicked"
             app:argType="com.ddb.hackernews.core.domain.model.News"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>
-<!--    com.ddb.hackernews.core.domain.model.News-->
 </navigation>

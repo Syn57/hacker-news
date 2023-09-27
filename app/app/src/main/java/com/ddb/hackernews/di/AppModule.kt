@@ -2,8 +2,8 @@ package com.ddb.hackernews.di
 
 import com.ddb.hackernews.core.domain.usecase.NewsInteractor
 import com.ddb.hackernews.core.domain.usecase.NewsUseCase
-import com.ddb.hackernews.detail.DetailNewsViewModel
-import com.ddb.hackernews.home.HomeViewModel
+import com.ddb.hackernews.viewmodel.DetailNewsViewModel
+import com.ddb.hackernews.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

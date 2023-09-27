@@ -5,19 +5,15 @@
 
     <data>
         <variable
-            name="detailViewModel"
-            type="com.ddb.hackernews.detail.DetailStoryViewModel" />
-        <variable
             name="story"
-            type="com.ddb.hackernews.core.data.source.remote.response.StoryResponse" />
+            type="com.ddb.hackernews.core.domain.model.News" />
         <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".detail.DetailStoryActivity">
-
+        tools:context=".home.DetailNewsFragment">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_back"

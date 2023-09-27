@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import androidx.core.content.ContextCompat
-import com.ddb.hackernews.MainActivity
+import com.ddb.hackernews.home.MainActivity
 import com.ddb.hackernews.R
 
 class SplashScreenActivity : AppCompatActivity() {

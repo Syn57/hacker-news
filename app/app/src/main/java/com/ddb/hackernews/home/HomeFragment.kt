@@ -7,20 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ddb.hackernews.R
 import com.ddb.hackernews.core.data.Resource
-import com.ddb.hackernews.core.ui.ListTopStoriesAdapter
-import com.ddb.hackernews.core.data.source.remote.response.StoryResponse
 import com.ddb.hackernews.core.ui.TopNewsAdapter
 import com.ddb.hackernews.databinding.FragmentHomeBinding
-import com.ddb.hackernews.viewmodel.MainViewModel
-import com.ddb.hackernews.viewmodel.ViewModelFactory
+import com.ddb.hackernews.viewmodel.HomeViewModel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +25,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mainViewModel: MainViewModel
     private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,11 +66,9 @@ class HomeFragment : Fragment() {
             newsAdapter.onItemClick = { selectedData ->
                 val theStory = HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment()
                 theStory.storyClicked = selectedData
-                view.findNavController().navigate(theStory)
+                Navigation.findNavController(view).navigate(theStory)
             }
-
             homeViewModel.news.observe(viewLifecycleOwner){ news ->
-//                Log.d(TAG, "onViewCreatedNew: ${news.data}")
                 if(news!=null){
                     Log.d(TAG, "onViewCreatedNew: ${news.data}")
                     when (news){
@@ -113,76 +105,17 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         GlobalScope.launch {
-            mainViewModel.favorite()
+//            mainViewModel.favorite()
         }
     }
 
     fun initAction() {
-        //Initialize late init variables
-        mainViewModel = obtainViewModel(requireActivity() as AppCompatActivity)
+
         //Shimmer start
         binding.shimmerTopStories.startShimmer()
-//        mainViewModel.isLoading.observe(viewLifecycleOwner) {
-//            showShimmer(it)
-//        }
-        binding.mainViewModel = mainViewModel
         binding.lifecycleOwner = this
         //Retrieving latest favorite story
-        mainViewModel.newsEntity.observe(viewLifecycleOwner) {
-//            favorite(it)
-        }
 
-    }
-
-//    private fun topStoriesRv(view: View) {
-//        mainViewModel.getTopStories()
-//        mainViewModel.stories.observe(viewLifecycleOwner) {
-//            val layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-//            binding.rvTopStories.layoutManager = layoutManager
-//            val adapter = ListTopStoriesAdapter(it)
-//            binding.rvTopStories.adapter = adapter
-//            mainViewModel._isLoading.value = false
-////            myAdapter = ListTopStoriesAdapter(it)
-////            myAdapter.notifyDataSetChanged()
-////            myAdapter.addAll
-//            adapter.setOnItemClickCallback(object : ListTopStoriesAdapter.OnItemClickCallback {
-//                override fun onItemClicked(data: StoryResponse) {
-//                    Log.d(TAG, "onItemClicked: $data")
-////                    val theStory = HomeFragmentDirections.actionHomeFragmentToDetailStoryActivity()
-//                    val theStory =
-//                        HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment(
-////                            data
-//                        )
-//                    theStory.storyClicked = data
-//                    view.findNavController().navigate(theStory)
-////                    view.findNavController().na
-////                    val intent = Intent(this@MainActivity, DetailStoryActivity::class.java)
-////                    intent.putExtra("data", data)
-////                    startActivity(intent)
-//
-//                }
-//            })
-//        }
-//    }
-
-//    private fun favorite(it: Story?) {
-//        if (it == null) {
-//            binding.tvTitleFav.text = "-"
-//            binding.tvAuthorFav.text = "-"
-//        } else {
-//            binding.tvTitleFav.text = getString(R.string.title_fav_placeholder, it.title)
-//            binding.tvAuthorFav.text = getString(R.string.author_fav_placeholder, it.by)
-//        }
-//    }
-
-//    private fun showShimmer(state: Boolean) {
-//        binding.shimmerTopStories.visibility = if (state) View.VISIBLE else View.GONE
-//        binding.rvTopStories.visibility = if (state) View.GONE else View.VISIBLE
-//    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): MainViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[MainViewModel::class.java]
     }
 
     companion object {

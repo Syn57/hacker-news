@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.ddb.hackernews.core.data.source.local.entity.CommentEntity
 import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
-import com.ddb.hackernews.core.data.source.remote.response.StoryResponse
 import kotlinx.coroutines.flow.Flow
 
 @Dao

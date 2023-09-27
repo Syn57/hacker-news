@@ -6,18 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ddb.hackernews.core.BuildConfig
 import com.ddb.hackernews.core.R
+import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.databinding.ItemCommentsBinding
-import com.ddb.hackernews.core.databinding.ItemTopStoriesBinding
-import com.ddb.hackernews.core.domain.model.Comment
-import com.ddb.hackernews.core.domain.model.News
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
 
-    private var listData = ArrayList<Comment>()
+    private var listData = ArrayList<CommentsResponse>()
 
-    fun setData(newListData: List<Comment>?) {
+    fun setData(newListData: List<CommentsResponse>?) {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
@@ -40,7 +38,7 @@ class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemCommentsBinding.bind(itemView)
-        fun bind(data: Comment) {
+        fun bind(data: CommentsResponse) {
             with(binding) {
                 tvCommentsAuthor.text = data.by
                 tvCommentsContent.text = data.text

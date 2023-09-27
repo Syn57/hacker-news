@@ -15,5 +15,5 @@ interface INewsRepository {
 
     fun setFavoriteNews(news: News, state: Boolean)
 
-    fun getAllComments(idComments: List<Int>): Flow<Resource<List<Comment>>>
+    suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>>
 }

@@ -4,7 +4,6 @@ import com.ddb.hackernews.core.data.source.local.entity.CommentEntity
 import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
 import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-import com.ddb.hackernews.core.data.source.remote.response.StoryResponse
 import com.ddb.hackernews.core.domain.model.Comment
 import com.ddb.hackernews.core.domain.model.News
 import kotlinx.coroutines.NonDisposableHandle.parent
@@ -54,43 +53,4 @@ object DataMapper {
         isFav = input.isFav
     )
 
-    fun mapEntitiesToDomainComments(input: List<CommentEntity>): List<Comment> =
-        input.map{
-            Comment(
-                parent = it.parent,
-                by = it.by,
-                id = it.id,
-                text = it.text,
-                time = it.time,
-                type = it.type,
-                kids = it.kids
-            )
-        }
-
-    fun mapDomainToEntityComments(input: Comment) = CommentEntity(
-        id = input.id,
-        parent = input.parent,
-        by = input.by,
-        text = input.text,
-        time = input.time,
-        type = input.type,
-        kids = input.kids
-    )
-
-    fun mapResponsesToEntitiesComments(input: List<CommentsResponse>): List<CommentEntity>{
-        val newsList = ArrayList<CommentEntity>()
-        input.map {
-            val story = CommentEntity(
-                parent = it.parent,
-                by = it.by,
-                id = it.id,
-                text = it.text,
-                time = it.time,
-                type = it.type,
-                kids = it.kids
-            )
-            newsList.add(story)
-        }
-        return newsList
-    }
 }

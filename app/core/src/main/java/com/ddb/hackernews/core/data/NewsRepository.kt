@@ -1,5 +1,6 @@
 package com.ddb.hackernews.core.data
 
+import android.util.Log
 import com.ddb.hackernews.core.data.source.local.LocalDataSource
 import com.ddb.hackernews.core.data.source.local.entity.CommentEntity
 import com.ddb.hackernews.core.data.source.remote.RemoteDataSource
@@ -11,6 +12,7 @@ import com.ddb.hackernews.core.domain.model.News
 import com.ddb.hackernews.core.domain.repository.INewsRepository
 import com.ddb.hackernews.core.utils.AppExecutors
 import com.ddb.hackernews.core.utils.DataMapper
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.*
@@ -29,7 +31,6 @@ class NewsRepository(
                     DataMapper.mapEntitiesToDomain(it)
                 }
             }
-
             override fun shouldFetch(data: List<News>?): Boolean =
                 data == null || data.isEmpty()
 //                true // ganti dengan true jika ingin selalu mengambil data dari internet
@@ -54,21 +55,9 @@ class NewsRepository(
         appExecutors.diskIO().execute { localDataSource.setFavoriteNews(newsEntity, state) }
     }
 
-    override fun getAllComments(idComments: List<Int>): Flow<Resource<List<Comment>>> =
-        object : NetworkBoundResource<List<Comment>, List<CommentsResponse>>(){
-            override fun loadFromDB(): Flow<List<Comment>> {
-                return localDataSource.getAllComments().map {
-                    DataMapper.mapEntitiesToDomainComments(it)
-                }
-            }
-            override suspend fun createCall(): Flow<ApiResponse<List<CommentsResponse>>> =
-                remoteDataSource.getAllComments(idComments)
+    override suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>> = remoteDataSource.getAllComments(idComments)
 
-            override suspend fun saveCallResult(data: List<CommentsResponse>) {
-                val newsList = DataMapper.mapResponsesToEntitiesComments(data)
-                localDataSource.insertComment(newsList)
-            }
-            override fun shouldFetch(data: List<Comment>?): Boolean = true
-        }.asFlow()
+
+
 
 }

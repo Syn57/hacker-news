@@ -13,5 +13,5 @@ class NewsInteractor(private val newsRepository: INewsRepository): NewsUseCase {
     override fun getFavoriteNews() = newsRepository.getFavoriteNews()
 
     override fun setFavoriteNews(news: News, state: Boolean) = newsRepository.setFavoriteNews(news, state)
-    override fun getAllComments(idComments: List<Int>) = newsRepository.getAllComments(idComments)
+    override suspend fun getAllComments(idComments: List<Int?>?) = newsRepository.getAllComments(idComments)
 }

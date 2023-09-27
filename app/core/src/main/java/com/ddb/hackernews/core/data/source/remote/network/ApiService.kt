@@ -7,10 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiService {
-    @GET("v0/item/{id}")
-    fun getStory(
-        @Path("id") id: String
-    ): Call<StoryResponse>
 
     @GET("v0/topstories.json")
     suspend fun getTopNews(): List<Int>
@@ -25,19 +21,4 @@ interface ApiService {
         @Path("id") id: String
     ): CommentsResponse
 
-    @GET("v0/item/{id}.json")
-    fun getComments2(
-        @Path("id") id: String
-    ): CommentsResponse
-
-    @GET("v0/item/{id}")
-    fun getComment(
-        @Path("id") id: String
-    ): Call<CommentsResponse>
-
-    @GET("v0/topstories.json")
-    fun getTop(): Call<List<Int>>
-
-    @GET("v0/topstories.json")
-    fun test(): TopListNewsResponse
 }

@@ -1,7 +1,8 @@
-package com.ddb.hackernews
+package com.ddb.hackernews.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ddb.hackernews.R
 
 class MainActivity : AppCompatActivity() {
 

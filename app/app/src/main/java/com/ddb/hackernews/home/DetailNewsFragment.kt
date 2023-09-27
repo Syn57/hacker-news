@@ -1,4 +1,4 @@
-package com.ddb.hackernews.detail
+package com.ddb.hackernews.home
 
 import android.os.Bundle
 import android.util.Log
@@ -7,56 +7,44 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ddb.hackernews.BuildConfig
 import com.ddb.hackernews.R
 import com.ddb.hackernews.core.data.Resource
-import com.ddb.hackernews.core.ui.ListCommentsAdapter
 import com.ddb.hackernews.core.domain.model.News
 import com.ddb.hackernews.core.ui.CommentsAdapter
-import com.ddb.hackernews.databinding.FragmentDetailStoryBinding
-import com.ddb.hackernews.viewmodel.ViewModelFactory
+import com.ddb.hackernews.databinding.FragmentDetailNewsBinding
+import com.ddb.hackernews.viewmodel.DetailNewsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class DetailStoryFragment : Fragment() {
+class DetailNewsFragment : Fragment() {
 
-    private var _binding: FragmentDetailStoryBinding? = null
+    private var _binding: FragmentDetailNewsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var detailStoryViewModel: DetailStoryViewModel
     private val detailNewsViewModel: DetailNewsViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_detail_story, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_news, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAction()
-        val storyClicked = DetailStoryActivityArgs.fromBundle(arguments as Bundle).storyClicked
-        Log.d(TAG, "onViewCreated: $storyClicked")
+        val storyClicked = DetailNewsFragmentArgs.fromBundle(arguments as Bundle).storyClicked
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
-        detailNewsViewModel.getAllComments(storyClicked?.kids as List<Int>).observe(viewLifecycleOwner){
-//            Log.d(TAG, "comments: ${it.data}")
-            if (it!= null){
+        Log.d(TAG, "onViewCreated: ${storyClicked?.kids}")
+        detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner){
+            Log.d(TAG, "comments")
+            if (it.data!= null){
                 Log.d(TAG, "comments: ${it.data}")
                 when (it) {
                     is Resource.Loading -> {
@@ -81,29 +69,17 @@ class DetailStoryFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireActivity())
             adapter = commentsAdapter
         }
-
-//        showComments(storyClicked?.kids)
-//        favCondition(storyClicked)
-
     }
 
     private fun showDetail(news: News? = null) {
-//        binding.tvDetailTitle.text = storyResponse?.title
-//        binding.tvDetailDesc.text = storyResponse?.url
         binding.story = news
         val sdf = SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.TAIWAN)
         val date = Date(news?.time?.toLong()?.times(1000) ?: 1532358895000)
         binding.tvDetailDate.text = sdf.format(date)
-//        binding.tvDetailAuthor.text = storyResponse?.by
 
     }
 
     private fun initAction() {
-        //Initialize late init variables
-//        binding = ActivityDetailStoryBinding.inflate(layoutInflater)
-
-        detailStoryViewModel = obtainViewModel(requireActivity() as AppCompatActivity)
-        binding.detailViewModel = detailStoryViewModel
         binding.lifecycleOwner = this
         //Shimmer start
         binding.shimmerComments.startShimmer()
@@ -114,20 +90,6 @@ class DetailStoryFragment : Fragment() {
         }
     }
 
-    private fun showComments(ids: List<Int?>?) {
-        if (ids != null) {
-            detailStoryViewModel.getComments(ids as List<Int>)
-        }
-        detailStoryViewModel.comments.observe(viewLifecycleOwner) {
-            val layoutManager = LinearLayoutManager(requireActivity())
-            binding.rvComments.layoutManager = layoutManager
-            val adapter = ListCommentsAdapter(it)
-            binding.rvComments.adapter = adapter
-            detailStoryViewModel._isLoading.value = false
-            binding.rvComments.visibility = View.VISIBLE
-            binding.shimmerComments.visibility = View.GONE
-        }
-    }
 
 //    private fun favCondition(story: News?) {
 //        var flag = false
@@ -160,11 +122,6 @@ class DetailStoryFragment : Fragment() {
         } else {
             binding.btnDetailStar.setImageResource(R.drawable.ic_star_grey)
         }
-    }
-
-    private fun obtainViewModel(activity: AppCompatActivity): DetailStoryViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory)[DetailStoryViewModel::class.java]
     }
 
     companion object {

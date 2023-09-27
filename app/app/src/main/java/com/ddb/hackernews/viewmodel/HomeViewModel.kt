@@ -1,4 +1,4 @@
-package com.ddb.hackernews.home
+package com.ddb.hackernews.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

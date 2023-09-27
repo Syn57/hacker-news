@@ -12,5 +12,5 @@ interface NewsUseCase {
     fun getAllNews(): Flow<Resource<List<News>>>
     fun getFavoriteNews(): Flow<List<News>>
     fun setFavoriteNews(news: News, state: Boolean)
-    fun getAllComments(idComments: List<Int>): Flow<Resource<List<Comment>>>
+    suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>>
 }

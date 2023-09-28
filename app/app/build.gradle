@@ -49,10 +49,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    dynamicFeatures = [':favorite']
 }
 
 dependencies {
     implementation project(":core")
+//    implementation project(":favorite")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
     implementation 'androidx.appcompat:appcompat:1.6.1'

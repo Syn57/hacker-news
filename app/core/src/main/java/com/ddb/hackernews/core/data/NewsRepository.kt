@@ -1,13 +1,11 @@
 package com.ddb.hackernews.core.data
 
-import android.util.Log
+
 import com.ddb.hackernews.core.data.source.local.LocalDataSource
-import com.ddb.hackernews.core.data.source.local.entity.CommentEntity
 import com.ddb.hackernews.core.data.source.remote.RemoteDataSource
 import com.ddb.hackernews.core.data.source.remote.network.ApiResponse
 import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-import com.ddb.hackernews.core.domain.model.Comment
 import com.ddb.hackernews.core.domain.model.News
 import com.ddb.hackernews.core.domain.repository.INewsRepository
 import com.ddb.hackernews.core.utils.AppExecutors
@@ -44,15 +42,25 @@ class NewsRepository(
             }
         }.asFlow()
 
-    override fun getFavoriteNews(): Flow<List<News>> {
+    override fun getFavoriteNews(): Flow<List<News>?> {
         return localDataSource.getFavoriteNews().map {
-            DataMapper.mapEntitiesToDomain(it)
+            DataMapper.mapEntitiesToDomainFav(it)
+        }
+    }
+
+    override fun getLatestNewsFav(): Flow<News?> {
+        return  localDataSource.getLastNewsFav().map {
+            DataMapper.mapEntityToDomain(it)
         }
     }
 
     override fun setFavoriteNews(news: News, state: Boolean) {
         val newsEntity = DataMapper.mapDomainToEntity(news)
         appExecutors.diskIO().execute { localDataSource.setFavoriteNews(newsEntity, state) }
+    }
+
+    override fun getIsFav(id: Int): Flow<Boolean>  {
+        return localDataSource.getIsFav(id)
     }
 
     override suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>> = remoteDataSource.getAllComments(idComments)

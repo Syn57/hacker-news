@@ -1,5 +1,6 @@
 package com.ddb.hackernews.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -27,11 +28,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,13 +35,13 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
 //        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-//        return binding.root
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAction()
+
 //        topStoriesRv(view)
 //        binding.refreshLayout.setOnRefreshListener {
 ////            binding.refreshLayout.isRefreshing
@@ -61,6 +57,7 @@ class HomeFragment : Fragment() {
 //                }
 //            }
 //        }
+
         if(activity!=null){
             val newsAdapter = TopNewsAdapter()
             newsAdapter.onItemClick = { selectedData ->
@@ -79,7 +76,7 @@ class HomeFragment : Fragment() {
                         is Resource.Success -> {
                             binding.shimmerTopStories.visibility = View.GONE
                             binding.shimmerTopStories.stopShimmer()
-                            newsAdapter.setData(news.data)
+                            newsAdapter.setData(news.data?.sortedByDescending { it.time })
                         }
                         is Resource.Error -> {
                             binding.shimmerTopStories.visibility = View.GONE
@@ -110,12 +107,27 @@ class HomeFragment : Fragment() {
     }
 
     fun initAction() {
-
         //Shimmer start
         binding.shimmerTopStories.startShimmer()
         binding.lifecycleOwner = this
         //Retrieving latest favorite story
+        homeViewModel.latestNewsFav.observe(viewLifecycleOwner){
+            binding.tvTitleFav.text = it?.title ?: "-"
+            binding.tvAuthorFav.text = it?.by ?: "-"
+        }
+        //Move to detail news
+        binding.cvListFav.setOnClickListener {
+            try {
+                moveToFavActivity()
+            } catch (e: Exception){
+                Toast.makeText(requireActivity(), "Module not found", Toast.LENGTH_SHORT).show()
+            }
+        }
 
+    }
+
+    private fun moveToFavActivity() {
+        startActivity(Intent(requireActivity(), Class.forName("com.ddb.hackernews.favorite.favorite.FavoriteActivity")))
     }
 
     companion object {

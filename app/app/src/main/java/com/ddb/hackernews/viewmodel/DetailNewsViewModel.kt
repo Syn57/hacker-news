@@ -13,4 +13,5 @@ class DetailNewsViewModel(private val newsUseCase: NewsUseCase): ViewModel() {
         emit(Resource.Loading())
         emitSource(newsUseCase.getAllComments(idComments).asLiveData())
     }
+    fun getIsFav(id: Int) = newsUseCase.getIsFav(id).asLiveData()
 }

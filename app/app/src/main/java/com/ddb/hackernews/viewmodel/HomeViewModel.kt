@@ -9,5 +9,6 @@ import com.ddb.hackernews.core.domain.usecase.NewsUseCase
 
 class HomeViewModel(newsUseCase: NewsUseCase): ViewModel() {
     val news = newsUseCase.getAllNews().asLiveData()
+    val latestNewsFav = newsUseCase.getLatestNewsFav().asLiveData()
 
 }

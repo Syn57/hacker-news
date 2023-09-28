@@ -55,6 +55,22 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_list_fav"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        app:cardCornerRadius="5dp"
+                        android:foregroundGravity="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_fav_list"/>
+
+                    </androidx.cardview.widget.CardView>
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/iv_star_fav"
@@ -134,10 +150,12 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_top_stories"
                 android:layout_width="350dp"
-                android:layout_height="525dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="12dp"
                 app:cardCornerRadius="20dp"
+                android:layout_marginBottom="40dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_top_stories">
 

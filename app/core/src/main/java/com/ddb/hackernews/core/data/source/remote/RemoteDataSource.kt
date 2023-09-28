@@ -23,13 +23,11 @@ class RemoteDataSource(private val apiService: ApiService) {
                 val newsList = ArrayList<NewsResponse>()
                 Log.d("TAG", "getAllNews: $responseNewsList")
                 var count = 0
-                responseNewsList.forEach {
-                    if (count < 25){
-                        val news = apiService.getNews("$it")
-                        Log.d("TAG", "getAllNews2: ${news.score}")
-                        newsList.add(news)
-                        count++
-                    }
+                while (count<25){
+                    val news = apiService.getNews("${responseNewsList[count]}")
+                    Log.d("TAG", "getAllNews2: ${news.id}")
+                    newsList.add(news)
+                    count++
                 }
                 if (newsList.isNotEmpty()){
                     emit(ApiResponse.Success(newsList))

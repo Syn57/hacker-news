@@ -3,6 +3,7 @@ package com.ddb.hackernews.core.data.source.local.entity
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -10,7 +11,7 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "news")
+@Entity(tableName = "news", indices = [Index(value = ["title"], unique = true)])
 data class NewsEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

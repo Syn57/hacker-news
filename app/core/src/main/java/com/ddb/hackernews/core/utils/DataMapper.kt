@@ -1,12 +1,11 @@
 package com.ddb.hackernews.core.utils
 
-import com.ddb.hackernews.core.data.source.local.entity.CommentEntity
 import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
-import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
+
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-import com.ddb.hackernews.core.domain.model.Comment
+
 import com.ddb.hackernews.core.domain.model.News
-import kotlinx.coroutines.NonDisposableHandle.parent
+
 
 object DataMapper {
     fun mapResponsesToEntities(input: List<NewsResponse>): List<NewsEntity>{
@@ -40,6 +39,37 @@ object DataMapper {
                 kids = it.kids
             )
         }
+
+    fun mapEntitiesToDomainFav(input: List<NewsEntity>?): List<News>? {
+        return input?.map{
+            News(
+                id = it.id,
+                idStory = it.idStory,
+                title = it.title,
+                by = it.by,
+                time = it.time,
+                url = it.url,
+                isFav = it.isFav,
+                score = it.score,
+                kids = it.kids
+            )
+        }
+    }
+
+    fun mapEntityToDomain(input: NewsEntity?): News? {
+        return if (input != null) News(
+            id = input.id,
+            idStory = input.idStory,
+            title = input.title,
+            by = input.by,
+            time = input.time,
+            url = input.url,
+            isFav = input.isFav,
+            kids = input.kids,
+            score = input.score
+        ) else null
+    }
+
 
     fun mapDomainToEntity(input: News) = NewsEntity(
         id = input.id,

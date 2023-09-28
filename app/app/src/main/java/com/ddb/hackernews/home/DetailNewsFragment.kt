@@ -41,7 +41,8 @@ class DetailNewsFragment : Fragment() {
         val storyClicked = DetailNewsFragmentArgs.fromBundle(arguments as Bundle).storyClicked
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
-        Log.d(TAG, "onViewCreated: ${storyClicked?.kids}")
+        Log.d(TAG, "onViewCreated: ${storyClicked?.idStory}")
+        favCondition(storyClicked)
         detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner){
             Log.d(TAG, "comments")
             if (it.data!= null){
@@ -91,30 +92,29 @@ class DetailNewsFragment : Fragment() {
     }
 
 
-//    private fun favCondition(story: News?) {
-//        var flag = false
-//        detailStoryViewModel.getIsFav(story?.id ?: 1).observe(viewLifecycleOwner) { isFav ->
-//            flag = isFav
-//            setBgFav(flag)
-//        }
-//        binding.btnDetailStar.setOnClickListener {
-//            flag = !flag
-//            Log.d(TAG, "favCondition2: $flag")
-//            if (flag) {
-//                setBgFav(flag)
-//                story?.isFav = true
+    private fun favCondition(story: News?) {
+        var flag = false
+        detailNewsViewModel.getIsFav(story?.id ?: 1).observe(viewLifecycleOwner) { isFav ->
+            flag = isFav
+            setBgFav(flag)
+        }
+        binding.btnDetailStar.setOnClickListener {
+            flag = !flag
+            Log.d(TAG, "favCondition2: $flag")
+            if (flag) {
+                setBgFav(flag)
+                story?.isFav = true
 //                detailStoryViewModel.update(story)
-//                Toast.makeText(activity, "Added to favorite", Toast.LENGTH_SHORT).show()
-//            } else {
-//                setBgFav(flag)
-//                story?.isFav = false
+                Toast.makeText(activity, "Added to favorite", Toast.LENGTH_SHORT).show()
+            } else {
+                setBgFav(flag)
+                story?.isFav = false
 //                detailStoryViewModel.update(story)
-////                data.idStory?.let { it1 -> detailStoryViewModel.delete(it1) }
-//                Toast.makeText(activity, "Removed from favorite", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//    }
+//                data.idStory?.let { it1 -> detailStoryViewModel.delete(it1) }
+                Toast.makeText(activity, "Removed from favorite", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun setBgFav(state: Boolean) {
         if (state) {

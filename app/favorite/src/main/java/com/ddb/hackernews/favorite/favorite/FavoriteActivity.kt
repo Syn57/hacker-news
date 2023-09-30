@@ -2,8 +2,8 @@ package com.ddb.hackernews.favorite.favorite
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.ddb.hackernews.favorite.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.ddb.hackernews.core.ui.FavoriteAdapter
 import com.ddb.hackernews.favorite.databinding.ActivityFavoriteBinding
 import com.ddb.hackernews.favorite.di.favModule
 import com.ddb.hackernews.favorite.viewmodel.FavoriteViewModel
@@ -20,8 +20,18 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
         loadKoinModules(favModule)
-        favoriteViewModel.newsFav.observe(this){
-            Log.d("FavAct", "onCreate: $it")
+        val favAdapter = FavoriteAdapter()
+        favoriteViewModel.newsFav.observe(this) {
+            if (it != null) {
+                favAdapter.setData(it.reversed())
+            }
+        }
+        with(binding.rvFav) {
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            adapter = favAdapter
+        }
+        binding.ivBackFav.setOnClickListener {
+            finish()
         }
 
     }

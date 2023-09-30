@@ -1,14 +1,12 @@
 package com.ddb.hackernews.core.utils
 
 import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
-
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-
 import com.ddb.hackernews.core.domain.model.News
 
 
 object DataMapper {
-    fun mapResponsesToEntities(input: List<NewsResponse>): List<NewsEntity>{
+    fun mapResponsesToEntities(input: List<NewsResponse>): List<NewsEntity> {
         val newsList = ArrayList<NewsEntity>()
         input.map {
             val story = NewsEntity(
@@ -25,8 +23,9 @@ object DataMapper {
         }
         return newsList
     }
+
     fun mapEntitiesToDomain(input: List<NewsEntity>): List<News> =
-        input.map{
+        input.map {
             News(
                 id = it.id,
                 idStory = it.idStory,
@@ -41,7 +40,7 @@ object DataMapper {
         }
 
     fun mapEntitiesToDomainFav(input: List<NewsEntity>?): List<News>? {
-        return input?.map{
+        return input?.map {
             News(
                 id = it.id,
                 idStory = it.idStory,
@@ -71,16 +70,16 @@ object DataMapper {
     }
 
 
-    fun mapDomainToEntity(input: News) = NewsEntity(
-        id = input.id,
-        idStory = input.idStory,
-        title = input.title,
-        by = input.by,
-        url = input.url,
-        time = input.time,
-        score = input.score,
-        kids = input.kids,
-        isFav = input.isFav
+    fun mapDomainToEntity(input: News?) = NewsEntity(
+        id = input?.id ?: 0,
+        idStory = input?.idStory ?: 0,
+        title = input?.title ?: "",
+        by = input?.by ?: "",
+        url = input?.url ?: "",
+        time = input?.time ?: 0,
+        score = input?.score ?: 0,
+        kids = input?.kids ?: listOf(),
+        isFav = input?.isFav ?: false
     )
 
 }

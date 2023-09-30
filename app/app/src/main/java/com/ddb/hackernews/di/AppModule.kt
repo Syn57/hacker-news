@@ -10,9 +10,8 @@ import org.koin.dsl.module
 val useCaseModule = module {
     factory<NewsUseCase> { NewsInteractor(get()) }
 }
-//
+
 val viewModelModule = module {
     viewModel { DetailNewsViewModel(get()) }
-//    viewModel { FavoriteViewModel(get()) }
     viewModel { HomeViewModel(get()) }
 }

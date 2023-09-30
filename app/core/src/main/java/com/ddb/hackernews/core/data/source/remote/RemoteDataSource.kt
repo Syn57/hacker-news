@@ -1,13 +1,10 @@
 package com.ddb.hackernews.core.data.source.remote
 
-import android.content.res.Resources
-import android.util.Log
 import com.ddb.hackernews.core.data.Resource
 import com.ddb.hackernews.core.data.source.remote.network.ApiResponse
 import com.ddb.hackernews.core.data.source.remote.network.ApiService
 import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
-import com.ddb.hackernews.core.domain.model.Comment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -21,27 +18,24 @@ class RemoteDataSource(private val apiService: ApiService) {
             try {
                 val responseNewsList = apiService.getTopNews()
                 val newsList = ArrayList<NewsResponse>()
-                Log.d("TAG", "getAllNews: $responseNewsList")
                 var count = 0
-                while (count<25){
+                while (count < 25) {
                     val news = apiService.getNews("${responseNewsList[count]}")
-                    Log.d("TAG", "getAllNews2: ${news.id}")
                     newsList.add(news)
                     count++
                 }
-                if (newsList.isNotEmpty()){
+                if (newsList.isNotEmpty()) {
                     emit(ApiResponse.Success(newsList))
                 } else {
                     emit(ApiResponse.Empty)
                 }
-            } catch (e : Exception){
+            } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>>{
+    suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>> {
         return flow {
             try {
                 val result = ArrayList<CommentsResponse>()
@@ -49,17 +43,14 @@ class RemoteDataSource(private val apiService: ApiService) {
                     val response = apiService.getComments(it.toString())
                     result.add(response)
                 }
-                Log.d("TAG", "getAllComments2: $result")
-                if(result.isNotEmpty()){
+                if (result.isNotEmpty()) {
                     emit(Resource.Success(result.toList()))
                 }
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 emit(Resource.Error(e.toString()))
-                Log.e("RemoteDataSource", e.toString())
             }
         }.flowOn(Dispatchers.IO)
     }
-
 
 
 }

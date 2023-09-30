@@ -12,8 +12,4 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
 }

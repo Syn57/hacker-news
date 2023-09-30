@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ddb.hackernews.core.BuildConfig
 import com.ddb.hackernews.core.R
 import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.databinding.ItemCommentsBinding
-import java.text.SimpleDateFormat
+import com.ddb.hackernews.core.utils.DateFormatter
 import java.util.*
 
-class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
+class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
 
     private var listData = ArrayList<CommentsResponse>()
 
@@ -26,7 +25,9 @@ class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
         parent: ViewGroup,
         viewType: Int
     ): CommentsAdapter.ListViewHolder =
-        ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_comments, parent, false))
+        ListViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_comments, parent, false)
+        )
 
 
     override fun onBindViewHolder(holder: CommentsAdapter.ListViewHolder, position: Int) {
@@ -42,9 +43,8 @@ class CommentsAdapter: RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
             with(binding) {
                 tvCommentsAuthor.text = data.by
                 tvCommentsContent.text = data.text
-                val sdf = SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.TAIWAN)
-                val date = Date(data.time?.toLong()?.times(1000) ?: 1532358895000)
-                tvCommentsDate.text = sdf.format(date)
+                tvCommentsDate.text =
+                    DateFormatter.format(data.time?.toLong()?.times(1000) ?: 1532358895000)
             }
         }
     }

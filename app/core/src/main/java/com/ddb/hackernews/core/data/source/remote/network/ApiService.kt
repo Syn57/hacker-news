@@ -1,8 +1,6 @@
 package com.ddb.hackernews.core.data.source.remote.network
 
 import com.ddb.hackernews.core.data.source.remote.response.*
-import com.ddb.hackernews.core.domain.model.Comment
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 

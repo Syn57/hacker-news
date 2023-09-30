@@ -4,15 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.ddb.hackernews.core.BuildConfig
 import com.ddb.hackernews.core.R
 import com.ddb.hackernews.core.databinding.ItemTopStoriesBinding
 import com.ddb.hackernews.core.domain.model.News
-import java.text.SimpleDateFormat
+import com.ddb.hackernews.core.utils.DateFormatter
 import java.util.*
 
-class TopNewsAdapter: RecyclerView.Adapter<TopNewsAdapter.ListViewHolder>() {
+class TopNewsAdapter : RecyclerView.Adapter<TopNewsAdapter.ListViewHolder>() {
 
     private var listData = ArrayList<News>()
     var onItemClick: ((News) -> Unit)? = null
@@ -25,7 +23,9 @@ class TopNewsAdapter: RecyclerView.Adapter<TopNewsAdapter.ListViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ListViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_top_stories, parent, false))
+        ListViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_top_stories, parent, false)
+        )
 
     override fun getItemCount() = listData.size
 
@@ -40,11 +40,10 @@ class TopNewsAdapter: RecyclerView.Adapter<TopNewsAdapter.ListViewHolder>() {
             with(binding) {
                 tvItemAuthor.text = data.by
                 tvItemScore.text = data.score.toString()
-                tvItemComment.text = data.kids?.size.toString()
+                tvItemComment.text = if (data.kids == null) "0" else data.kids.size.toString()
                 tvItemTitle.text = data.title
-                val sdf = SimpleDateFormat(BuildConfig.DATE_FORMAT, Locale.TAIWAN)
-                val date = Date(data.time?.toLong()?.times(1000) ?: 1532358895000)
-                tvItemDate.text = sdf.format(date)
+                tvItemDate.text =
+                    DateFormatter.format(data.time?.toLong()?.times(1000) ?: 1532358895000)
             }
         }
 

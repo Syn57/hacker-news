@@ -1,11 +1,10 @@
 package com.ddb.hackernews.core.domain.model
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Comment (
+data class Comment(
     val parent: Int?,
     val by: String?,
     val id: Int?,
@@ -13,4 +12,4 @@ data class Comment (
     val time: Int?,
     val type: String?,
     val kids: List<Int?>?
-): Parcelable
+) : Parcelable

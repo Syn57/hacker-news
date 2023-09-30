@@ -33,8 +33,6 @@ dependencies{
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
     //koin
-//    implementation 'org.koin:android-viewmodel:2.1.6'
     implementation 'io.insert-koin:koin-core:3.4.3'
     implementation 'io.insert-koin:koin-android:3.4.3'
-//    implementation 'io.insert-koin:koin-android-viewmodel:3.4.3'
 }

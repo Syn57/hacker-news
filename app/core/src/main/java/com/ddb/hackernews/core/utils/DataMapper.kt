@@ -1,7 +1,9 @@
 package com.ddb.hackernews.core.utils
 
 import com.ddb.hackernews.core.data.source.local.entity.NewsEntity
+import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
+import com.ddb.hackernews.core.domain.model.Comment
 import com.ddb.hackernews.core.domain.model.News
 
 
@@ -22,6 +24,23 @@ object DataMapper {
             newsList.add(story)
         }
         return newsList
+    }
+
+    fun mapResponsesToEntitiesComment(input: List<CommentsResponse>?): List<Comment> {
+        val commentsList = ArrayList<Comment>()
+        input?.map {
+            val comment = Comment(
+                parent = it.parent,
+                by = it.by,
+                id = it.id,
+                text = it.text,
+                time = it.time,
+                type = it.type,
+                kids = it.kids
+            )
+            commentsList.add(comment)
+        }
+        return commentsList
     }
 
     fun mapEntitiesToDomain(input: List<NewsEntity>): List<News> =

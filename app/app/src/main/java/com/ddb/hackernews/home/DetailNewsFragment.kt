@@ -33,6 +33,7 @@ class DetailNewsFragment : Fragment() {
         _binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_detail_news, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,8 +43,8 @@ class DetailNewsFragment : Fragment() {
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
         favCondition(storyClicked)
-        detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner) {
-            if (storyClicked?.kids != null) {
+        if(storyClicked?.kids != null){
+            detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner) {
                 if (it.data != null) {
                     when (it) {
                         is Resource.Loading -> {
@@ -68,10 +69,11 @@ class DetailNewsFragment : Fragment() {
                         }
                     }
                 }
-            } else {
-                binding.shimmerComments.visibility = View.GONE
             }
+        } else {
+            binding.shimmerComments.visibility = View.GONE
         }
+
 
         with(binding.rvComments) {
             layoutManager = LinearLayoutManager(requireActivity())

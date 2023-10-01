@@ -1,6 +1,7 @@
 package com.ddb.hackernews.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -99,18 +100,17 @@ class HomeFragment : Fragment() {
         //Move to detail news
         binding.cvListFav.setOnClickListener {
             try {
-                moveToFavActivity()
-            } catch (e: Exception) {
+                moveToFavActivity()            } catch (e: Exception) {
                 Toast.makeText(requireActivity(), "Module not found", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun moveToFavActivity() {
+        val uri = Uri.parse("hackernews://favorite")
         startActivity(
             Intent(
-                requireActivity(),
-                Class.forName("com.ddb.hackernews.favorite.favorite.FavoriteActivity")
+                Intent.ACTION_VIEW, uri
             )
         )
     }

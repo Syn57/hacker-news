@@ -3,13 +3,14 @@ package com.ddb.hackernews.core.data
 import com.ddb.hackernews.core.data.source.local.LocalDataSource
 import com.ddb.hackernews.core.data.source.remote.RemoteDataSource
 import com.ddb.hackernews.core.data.source.remote.network.ApiResponse
-import com.ddb.hackernews.core.data.source.remote.response.CommentsResponse
 import com.ddb.hackernews.core.data.source.remote.response.NewsResponse
+import com.ddb.hackernews.core.domain.model.Comment
 import com.ddb.hackernews.core.domain.model.News
 import com.ddb.hackernews.core.domain.repository.INewsRepository
 import com.ddb.hackernews.core.utils.AppExecutors
 import com.ddb.hackernews.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class NewsRepository(
@@ -59,8 +60,10 @@ class NewsRepository(
         return localDataSource.getIsFav(id)
     }
 
-    override suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<CommentsResponse>>> =
-        remoteDataSource.getAllComments(idComments)
-
-
+    override suspend fun getAllComments(idComments: List<Int?>?): Flow<Resource<List<Comment>>> {
+        val response = remoteDataSource.getAllComments(idComments).first()
+        return remoteDataSource.getAllComments(idComments).map {
+            Resource.Success(DataMapper.mapResponsesToEntitiesComment(response.data))
+        }
+    }
 }

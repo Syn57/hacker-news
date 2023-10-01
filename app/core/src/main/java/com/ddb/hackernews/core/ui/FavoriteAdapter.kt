@@ -13,6 +13,7 @@ import java.util.ArrayList
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
 
     private var listData = ArrayList<News>()
+    var onItemClick: ((News) -> Unit)? = null
 
     fun setData(newListData: List<News>?) {
         if (newListData == null) return
@@ -32,6 +33,11 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
                 tvTitleFav.text = data.title
                 tvDateFav.text =
                     DateFormatter.format(data.time?.toLong()?.times(1000) ?: 1532358895000)
+            }
+        }
+        init {
+            binding.root.setOnClickListener {
+                onItemClick?.invoke(listData[adapterPosition])
             }
         }
     }

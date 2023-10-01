@@ -2,15 +2,16 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_nav"
-    app:startDestination="@id/homeFragment">
+    android:id="@+id/fav_nav"
+    app:startDestination="@id/fav_fragment">
+
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.ddb.hackernews.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/fav_fragment"
+        android:name="com.ddb.hackernews.favorite.favorite.FavFragment"
+        android:label="fragment_fav"
+        tools:layout="@layout/fragment_fav">
         <action
-            android:id="@+id/action_homeFragment_to_detailStoryFragment"
+            android:id="@+id/action_favFragment_to_detailStoryFragment"
             app:destination="@id/detailNewsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />

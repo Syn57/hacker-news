@@ -1,6 +1,7 @@
 package com.ddb.hackernews.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +44,7 @@ class DetailNewsFragment : Fragment() {
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
         favCondition(storyClicked)
-        if(storyClicked?.kids != null){
+        if(storyClicked?.kids?.size != 0){
             detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner) {
                 if (it.data != null) {
                     when (it) {

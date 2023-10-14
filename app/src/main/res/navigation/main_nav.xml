@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ddb.hackernews.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailStoryFragment"
+            app:destination="@id/detailNewsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailNewsFragment"
+        android:name="com.ddb.hackernews.home.DetailNewsFragment"
+        android:label="fragment_detail_story"
+        tools:layout="@layout/fragment_detail_news">
+        <argument
+            android:name="storyClicked"
+            android:defaultValue="@null"
+            app:argType="com.ddb.hackernews.core.domain.model.News"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>

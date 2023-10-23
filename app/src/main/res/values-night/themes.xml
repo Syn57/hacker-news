@@ -20,4 +20,9 @@
         <item name="cornerSize">6dp</item>
         <item name="cornerSizeTopRight">6dp</item>
     </style>
+    <style name="customSplashTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:background">@color/orange_primary</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

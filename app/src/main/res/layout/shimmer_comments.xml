@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
     android:layout_width="363dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -25,7 +24,6 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/tv_shimmer_comments_date"
             android:layout_width="75dp"
             android:layout_height="18dp"
             android:layout_marginStart="8dp"

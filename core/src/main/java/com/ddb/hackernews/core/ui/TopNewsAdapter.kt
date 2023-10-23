@@ -19,7 +19,8 @@ class TopNewsAdapter : RecyclerView.Adapter<TopNewsAdapter.ListViewHolder>() {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        notifyItemRangeInserted(0,newListData.size)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

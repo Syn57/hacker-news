@@ -19,7 +19,8 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        notifyItemRangeInserted(0,newListData.size)
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

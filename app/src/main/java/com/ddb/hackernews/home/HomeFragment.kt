@@ -90,6 +90,11 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun initAction() {
         binding.lifecycleOwner = this
         //Retrieving latest favorite story
@@ -100,7 +105,8 @@ class HomeFragment : Fragment() {
         //Move to detail news
         binding.cvListFav.setOnClickListener {
             try {
-                moveToFavActivity()            } catch (e: Exception) {
+                moveToFavActivity()
+            } catch (e: Exception) {
                 Toast.makeText(requireActivity(), "Module not found", Toast.LENGTH_SHORT).show()
             }
         }

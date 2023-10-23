@@ -18,7 +18,9 @@ class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.ListViewHolder>() {
         if (newListData == null) return
         listData.clear()
         listData.addAll(newListData)
-        notifyDataSetChanged()
+//        notifyDataSetChanged()
+        notifyItemRangeInserted(0,newListData.size)
+
     }
 
     override fun onCreateViewHolder(

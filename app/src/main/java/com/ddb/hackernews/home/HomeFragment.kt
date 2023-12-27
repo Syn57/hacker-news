@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
                             binding.rvTopStories.visibility = View.VISIBLE
                             binding.shimmerTopStories.stopShimmer()
                             newsAdapter.setData(news.data?.sortedByDescending { it.time })
+                            newsAdapter.notifyItemChanged(0)
                         }
 
                         is Resource.Error -> {

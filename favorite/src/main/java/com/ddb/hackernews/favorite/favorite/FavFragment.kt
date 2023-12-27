@@ -34,22 +34,28 @@ class FavFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val favAdapter = FavoriteAdapter()
         favAdapter.onItemClick = { selectedData ->
-            val theStory = FavFragmentDirections.actionFavFragmentToDetailStoryFragment()
+            val theStory = FavFragmentDirections.actionFavFragmentToDetailFragmentFav()
             theStory.storyClicked = selectedData
             Navigation.findNavController(view).navigate(theStory)
         }
         favoriteViewModel.newsFav.observe(viewLifecycleOwner) {
             if (it != null) {
                 favAdapter.setData(it.reversed())
+                favAdapter.notifyItemChanged(0)
             }
         }
         with(binding.rvFav) {
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = favAdapter
         }
         binding.ivBackFav.setOnClickListener {
             requireActivity().finish()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

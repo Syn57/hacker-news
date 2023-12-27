@@ -85,6 +85,7 @@ class DetailNewsFragment : Fragment() {
 
     private fun showDetail(news: News? = null) {
         binding.story = news
+//        binding.tvDetailDate.
         binding.tvDetailDate.text =
             DateFormatter.format(news?.time?.toLong()?.times(1000) ?: 1532358895000)
     }

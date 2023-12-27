@@ -10,17 +10,14 @@
         android:label="fragment_fav"
         tools:layout="@layout/fragment_fav">
         <action
-            android:id="@+id/action_favFragment_to_detailStoryFragment"
-            app:destination="@id/detailNewsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            android:id="@+id/action_fav_fragment_to_detailFragmentFav"
+            app:destination="@id/detailFragmentFav" />
     </fragment>
 
     <fragment
-        android:id="@+id/detailNewsFragment"
-        android:name="com.ddb.hackernews.home.DetailNewsFragment"
-        android:label="fragment_detail_story"
-        tools:layout="@layout/fragment_detail_news">
+        android:id="@+id/detailFragmentFav"
+        android:name="com.ddb.hackernews.favorite.favorite.DetailFragmentFav"
+        android:label="DetailFragmentFav">
         <argument
             android:name="storyClicked"
             android:defaultValue="@null"

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ddb.hackernews.core.ui.FavoriteAdapter
+import com.ddb.hackernews.core.ui.FavoriteListAdapter
 import com.ddb.hackernews.favorite.R
 import com.ddb.hackernews.favorite.databinding.FragmentFavBinding
 import com.ddb.hackernews.favorite.viewmodel.FavoriteViewModel
@@ -19,6 +19,7 @@ class FavFragment : Fragment() {
     private var _binding: FragmentFavBinding? = null
     private val binding get() = _binding!!
     private val favoriteViewModel: FavoriteViewModel by viewModel()
+    private var adapter: FavoriteListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,22 +33,20 @@ class FavFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val favAdapter = FavoriteAdapter()
-        favAdapter.onItemClick = { selectedData ->
+        adapter = FavoriteListAdapter { selectedData ->
             val theStory = FavFragmentDirections.actionFavFragmentToDetailFragmentFav()
             theStory.storyClicked = selectedData
             Navigation.findNavController(view).navigate(theStory)
         }
         favoriteViewModel.newsFav.observe(viewLifecycleOwner) {
             if (it != null) {
-                favAdapter.setData(it.reversed())
-                favAdapter.notifyItemChanged(0)
+                adapter?.submitList(it.reversed())
             }
         }
         with(binding.rvFav) {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = favAdapter
         }
+        binding.rvFav.adapter = adapter
         binding.ivBackFav.setOnClickListener {
             requireActivity().finish()
         }
@@ -56,6 +55,7 @@ class FavFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter = null
     }
 
 }

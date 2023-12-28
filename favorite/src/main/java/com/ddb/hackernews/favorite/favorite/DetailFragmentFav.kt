@@ -39,12 +39,10 @@ class DetailFragmentFav : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAction(view)
-//        val storyClicked = DetailNewsFragmentArgs.fromBundle(arguments as Bundle).storyClicked
         val storyClicked = DetailFragmentFavArgs.fromBundle(arguments as Bundle).storyClicked
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
         favCondition(storyClicked)
-        Log.d("TAG", "onViewCreated: ${storyClicked?.kids?.size}")
         if(storyClicked?.kids?.size != null){
             detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner) {
                 if (it.data != null) {

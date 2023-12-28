@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ddb.hackernews.R
 import com.ddb.hackernews.core.data.Resource
-import com.ddb.hackernews.core.ui.TopNewsAdapter
+import com.ddb.hackernews.core.ui.TopNewsListAdapter
 import com.ddb.hackernews.databinding.FragmentHomeBinding
 import com.ddb.hackernews.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +25,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val homeViewModel: HomeViewModel by viewModel()
+    private var adapter: TopNewsListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,18 +38,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = TopNewsListAdapter { selectedData ->
+            val theStory = HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment()
+            theStory.storyClicked = selectedData
+            Navigation.findNavController(view).navigate(theStory)
+        }
         initAction()
         getData(view)
     }
 
     private fun getData(view: View) {
         if (activity != null) {
-            val newsAdapter = TopNewsAdapter()
-            newsAdapter.onItemClick = { selectedData ->
-                val theStory = HomeFragmentDirections.actionHomeFragmentToDetailStoryFragment()
-                theStory.storyClicked = selectedData
-                Navigation.findNavController(view).navigate(theStory)
-            }
             homeViewModel.news.observe(viewLifecycleOwner) { news ->
                 if (news != null) {
                     when (news) {
@@ -62,8 +62,7 @@ class HomeFragment : Fragment() {
                             binding.shimmerTopStories.visibility = View.GONE
                             binding.rvTopStories.visibility = View.VISIBLE
                             binding.shimmerTopStories.stopShimmer()
-                            newsAdapter.setData(news.data?.sortedByDescending { it.time })
-                            newsAdapter.notifyItemChanged(0)
+                            adapter?.submitList(news.data?.sortedBy { it.time })
                         }
 
                         is Resource.Error -> {
@@ -81,8 +80,8 @@ class HomeFragment : Fragment() {
 
             with(binding.rvTopStories) {
                 layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-                adapter = newsAdapter
             }
+            binding.rvTopStories.adapter = adapter
         }
     }
 
@@ -94,6 +93,7 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter = null
     }
 
     private fun initAction() {

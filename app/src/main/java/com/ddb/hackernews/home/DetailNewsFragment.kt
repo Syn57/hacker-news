@@ -44,7 +44,6 @@ class DetailNewsFragment : Fragment() {
         showDetail(storyClicked)
         val commentsAdapter = CommentsAdapter()
         favCondition(storyClicked)
-        Log.d("TAG", "onViewCreated: ${storyClicked?.kids?.size}")
         if(storyClicked?.kids?.size != null){
             detailNewsViewModel.getAllComments(storyClicked?.kids).observe(viewLifecycleOwner) {
                 if (it.data != null) {

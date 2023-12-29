@@ -1,4 +1,5 @@
 # Hacker News App - Mini project
+[![arifaizin](https://circleci.com/gh/arifaizin/MySimpleCleanArchitecture.svg?style=svg)](https://app.circleci.com/pipelines/circleci/QPUjySL8evD5hKLumVzwuc/PsEAiiLT7XU565ShdqJmDC)
 
 ## Overview
 An application to retrieve and show top stories data from Hacker News API. The app can also store a certain favorite story.
